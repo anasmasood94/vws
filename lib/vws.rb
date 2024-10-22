@@ -75,12 +75,11 @@ module Vws
       end
     end
 
-    def add_target(target_name, file_path, width, active_flag, metadata=nil)
-      raise "file path is required"   if file_path.nil?
+    def add_target(target_name, contents_encoded, width, active_flag, metadata=nil)
+      raise "file path is required"   if contents_encoded.nil?
       raise "target name is required" if target_name.nil?
       date_timestamp = Time.now.httpdate
       #for file uploads, read file contents data and Base 64 encode it:
-      contents_encoded = Base64.encode64(open(file_path) { |io| io.read })
       metadata_encoded = Base64.encode64(metadata.to_s)
       body_hash = { :name => target_name,
                     :width => width, #width of the target in scene units
